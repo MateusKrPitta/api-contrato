@@ -38,8 +38,8 @@ export default class UsersController {
 
   async store({ request, response }: HttpContext) {
     try {
-      // 1. Valida dados básicos com VineJS
-      const data = await request.validateUsing(createUserValidator)
+      // 1. Valida dados básicos com VineJS - FORMA CORRETA
+      const data = await createUserValidator.validate(request.all())
 
       // 2. Validações manuais de unicidade
       const existingEmail = await db.from('users').where('email', data.email).first()
@@ -127,8 +127,8 @@ export default class UsersController {
         })
       }
 
-      // 1. Valida dados básicos com VineJS
-      const data = await request.validateUsing(updateUserValidator)
+      // 1. Valida dados básicos com VineJS - FORMA CORRETA
+      const data = await updateUserValidator.validate(request.all())
 
       // 2. Validações manuais de unicidade
       if (data.email && data.email !== user.email) {

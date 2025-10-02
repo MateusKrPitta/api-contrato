@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Contrato from '#models/contrato'
-import db from '@adonisjs/lucid/services/db'
 
 interface ContratoData {
   cliente_id: number
