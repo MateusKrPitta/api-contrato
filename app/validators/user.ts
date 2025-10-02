@@ -2,7 +2,7 @@ import vine from '@vinejs/vine'
 import { FieldContext } from '@vinejs/vine/types'
 
 // Função helper para validação de email único com tipagem correta
-const uniqueEmailRule = vine.createRule((value: unknown, options, field: FieldContext) => {
+const uniqueEmailRule = vine.createRule((value: unknown, _options, field: FieldContext) => {
   return async () => {
     // Verifica se o valor é uma string
     if (typeof value !== 'string') {
@@ -28,7 +28,7 @@ const uniqueEmailRule = vine.createRule((value: unknown, options, field: FieldCo
 })
 
 // Função helper para validação de CPF único com tipagem correta
-const uniqueCpfRule = vine.createRule((value: unknown, options, field: FieldContext) => {
+const uniqueCpfRule = vine.createRule((value: unknown, _options, field: FieldContext) => {
   return async () => {
     // Se for undefined ou null, ignora (campo optional)
     if (value === null || value === undefined || value === '') {
