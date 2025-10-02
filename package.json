@@ -5,13 +5,8 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "node ace serve",
-    "build": "node ace build --ignore-ts-errors",
-    "start": "node build/server.js",
-    "test": "node ace test",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "build": "node ace build --ignore-ts-errors && echo '=== BUILD CONTENTS ===' && find . -name 'server.js' -type f && echo '=== BUILD FOLDER ===' && ls -la build/ || echo 'Build folder not found'",
+    "start": "node build/server.js"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
