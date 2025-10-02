@@ -5,7 +5,7 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "node ace build --ignore-ts-errors && echo '=== BUILD CONTENTS ===' && find . -name 'server.js' -type f && echo '=== BUILD FOLDER ===' && ls -la build/ || echo 'Build folder not found'",
+    "build": "node ace build --ignore-ts-errors",
     "start": "node build/server.js"
   },
   "imports": {
