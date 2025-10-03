@@ -1,3 +1,4 @@
+// adonisrc.ts
 import { defineConfig } from '@adonisjs/core/app'
 
 export default defineConfig({
@@ -21,11 +22,7 @@ export default defineConfig({
     () => import('@adonisjs/auth/auth_provider'),
   ],
 
-  preloads: [
-    () => import('#start/routes'),
-    () => import('#start/kernel'),
-    () => import('#start/app'),
-  ],
+  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
 
   tests: {
     suites: [
