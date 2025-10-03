@@ -6,7 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "node ace build --ignore-ts-errors",
-    "start": "node build/bin/server.js",
+    "postbuild": "cd build && npm ci --omit=dev",
+    "start": "cd build && node bin/server.js",
     "prestart": "npm run build"
   },
   "imports": {
