@@ -6,9 +6,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "node ace build --ignore-ts-errors",
+    "debug:files": "cd build && echo '=== FILES IN START ===' && ls -la start/ && echo '=== APP.JS CONTENT ===' && cat start/app.js && echo '=== BUILD STRUCTURE ===' && find . -name '*.js' | grep -E '(server|app)' | head -10",
     "start": "cd build && node bin/server.js",
-    "prestart": "npm run build",
-    "postbuild": "cd build && cp ../package.json . && npm ci --omit=dev && mkdir -p start && echo \"import app from '@adonisjs/core/services/app'\\napp.ready(() => {\\n  console.log('🚀 Application is ready')\\n})\\nexport default app\" > start/app.js"
+    "prestart": "npm run build && npm run debug:files",
+    "postbuild": "cd build && cp ../package.json . && npm ci --omit=dev && mkdir -p start && echo \"import app from '@adonisjs/core/services/app'; app.ready(() => { console.log('🚀 Application is ready') }); export default app\" > start/app.js"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
