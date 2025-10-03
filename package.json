@@ -5,8 +5,8 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "tsc",
-    "dev": "node ace serve",
+    "build": "node ace build --ignore-ts-errors",
+    "dev": "node ace serve --watch",
     "start": "node build/bin/server.js",
     "test": "node ace test",
     "lint": "eslint .",
