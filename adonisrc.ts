@@ -23,7 +23,11 @@ export default defineConfig({
     (() => import('@adonisjs/http-server')) as unknown as any,
   ],
 
-  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
+  preloads: [
+    () => import('#start/routes'),
+    () => import('#start/kernel'),
+    () => import('#start/app'),
+  ],
 
   tests: {
     suites: [
