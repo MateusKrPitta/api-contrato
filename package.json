@@ -5,9 +5,10 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npm ci --omit=dev && node ace build --ignore-ts-errors",
-    "start": "node build/bin/server.js",
-    "prestart": "npm run build"
+    "build": "node ace build --ignore-ts-errors",
+    "start": "cd build && node bin/server.js",
+    "prestart": "npm run build",
+    "postbuild": "cd build && cp ../package.json . && npm ci --omit=dev"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
