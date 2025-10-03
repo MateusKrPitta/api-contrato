@@ -7,17 +7,15 @@ const dbConfig = defineConfig({
     pg: {
       client: 'pg',
       connection: {
-        host: env.get('DB_HOST'),
-        port: env.get('DB_PORT'),
-        user: env.get('DB_USER'),
-        password: env.get('DB_PASSWORD'),
-        database: env.get('DB_DATABASE'),
-        ssl:
-          env.get('NODE_ENV') === 'production'
-            ? {
-                rejectUnauthorized: false,
-              }
-            : false,
+        // DADOS FIXOS DO RAILWAY - substitua com seus valores reais
+        host: 'containers-us-212-1.railway.app', // seu RAILWAY_PRIVATE_DOMAIN
+        port: 5432,
+        user: 'postgres',
+        password: 'ZWlrXliDmpcOSxOMCpTapfhnnQqePtqH',
+        database: 'railway',
+        ssl: {
+          rejectUnauthorized: false,
+        },
       },
       migrations: {
         naturalSort: true,
