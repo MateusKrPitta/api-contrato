@@ -5,10 +5,13 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "node ace build --ignore-ts-errors",
-    "prestart": "npm run build",
-    "start": "node build/bin/server.js",
-    "postbuild": "cd build && cp ../.env . 2>/dev/null || true && cp ../package.json . && npm ci --omit=dev --ignore-scripts"
+    "dev": "node ace serve",
+    "start": "node bin/server.js",
+    "build": "node ace build",
+    "test": "node ace test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
@@ -48,7 +51,7 @@
     "typescript": "~5.8"
   },
   "dependencies": {
-    "@adonisjs/auth": "^9.5.0",
+    "@adonisjs/auth": "^9.4.0",
     "@adonisjs/core": "^6.19.0",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^21.8.0",
