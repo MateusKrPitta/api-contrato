@@ -6,9 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "node ace build --ignore-ts-errors",
-    "start": "node build/bin/server.js",
-    "fix:adonis": "rm -rf build && node ace configure --silent && npm run build",
-    "debug:build": "ls -la build/config/ && ls -la build/start/"
+    "start": "node build/server.js",
+    "prestart": "npm run build"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
