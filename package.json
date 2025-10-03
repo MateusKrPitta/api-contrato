@@ -8,7 +8,7 @@
     "build": "node ace build --ignore-ts-errors",
     "start": "cd build && node bin/server.js",
     "prestart": "npm run build",
-    "postbuild": "cd build && cp ../package.json . && npm ci --omit=dev"
+    "postbuild": "cd build && cp ../package.json . && npm ci --omit=dev && echo '=== CHECKING APP.TS ===' && cat start/app.ts"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
