@@ -1,7 +1,8 @@
-// start/app.ts
 import app from '@adonisjs/core/services/app'
 
-app.ready(() => {
+await app.boot()
+
+app.start(async () => {
   console.log('🚀 Application is ready')
 })
 
