@@ -5,12 +5,9 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "node ace build --ignore-ts-errors",
-    "start": "cd build && node bin/server.js",
-    "prestart": "npm run build && cd build && npm ci --omit=dev",
-    "migrate": "cd build && node ace migration:run --force",
-    "seed": "cd build && node ace db:seed --force",
-    "deploy": "npm run build && cd build && npm ci --omit=dev && node ace migration:run --force && node bin/server.js"
+    "build": "npm ci --omit=dev && node ace build --ignore-ts-errors",
+    "start": "node build/bin/server.js",
+    "prestart": "npm run build"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
