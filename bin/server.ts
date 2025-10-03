@@ -2,7 +2,8 @@
 import 'reflect-metadata'
 import { Ignitor, prettyPrintError } from '@adonisjs/core'
 
-const APP_ROOT = new URL('../', import.meta.url)
+// CORRIJA ESTA LINDA - remova o '../' pois o arquivo já está em build/bin/
+const APP_ROOT = new URL('./', import.meta.url)
 
 const IMPORTER = (filePath: string) => {
   if (filePath.startsWith('./') || filePath.startsWith('../')) {
