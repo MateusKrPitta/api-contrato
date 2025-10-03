@@ -7,8 +7,8 @@
   "scripts": {
     "build": "node ace build --ignore-ts-errors",
     "prestart": "npm run build",
-    "start": "node build/bin/server.js",
-    "postbuild": "cd build && cp ../.env . 2>/dev/null || true && cp ../package.json . && npm ci --omit=dev"
+    "start": "cd build && node bin/server.js",
+    "postbuild": "cd build && cp ../.env . 2>/dev/null || true && cp ../package.json . && npm ci --omit=dev --ignore-scripts"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
