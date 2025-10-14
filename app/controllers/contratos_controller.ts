@@ -63,6 +63,36 @@ export default class ContratosController {
     }
   }
 
+  public async findByUser({ params, request, response }: HttpContext) {
+    try {
+      const userId = params.userId
+      const page = request.input('page', 1)
+      const perPage = request.input('perPage', 10)
+
+      const contratos = await Contrato.query()
+        .where('user_id', userId)
+        .preload('cliente') // ✅ Agora funciona
+        .preload('user') // ✅ Agora funciona
+        .orderBy('created_at', 'desc')
+        .paginate(page, perPage)
+
+      return response.json({
+        success: true,
+        message:
+          contratos.total > 0
+            ? `Encontrados ${contratos.total} contrato(s) para este usuário! 📋`
+            : 'Nenhum contrato encontrado para este usuário. 📭',
+        data: contratos,
+      })
+    } catch (error) {
+      return response.status(500).json({
+        success: false,
+        message: 'Erro ao buscar contratos do usuário. 😕',
+        error: error.message,
+      })
+    }
+  }
+
   public async count({ response }: HttpContext) {
     try {
       const totalContratos = await Contrato.query().count('* as total')

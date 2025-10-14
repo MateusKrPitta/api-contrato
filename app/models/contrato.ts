@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import User from '#models/user'
+import Cliente from '#models/cliente'
 
 export default class Contrato extends BaseModel {
   static table = 'contratos'
@@ -11,7 +14,7 @@ export default class Contrato extends BaseModel {
   declare cliente_id: number
 
   @column()
-  declare user_id: number // ← Agora user_id em vez de advogado_id
+  declare user_id: number
 
   @column()
   declare titulo: string
@@ -39,4 +42,16 @@ export default class Contrato extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  // Relação com Cliente
+  @belongsTo(() => Cliente, {
+    foreignKey: 'cliente_id',
+  })
+  declare cliente: BelongsTo<typeof Cliente>
+
+  // Relação com User (Advogado)
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+  })
+  declare user: BelongsTo<typeof User>
 }
