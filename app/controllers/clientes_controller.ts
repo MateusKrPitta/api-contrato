@@ -2,9 +2,21 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Cliente from '#models/cliente'
 
 export default class ClientesController {
-  async index({ response }: HttpContext) {
+  async index({ request, response }: HttpContext) {
     try {
-      const clientes = await Cliente.all()
+      const page = request.input('page', 1)
+      const limit = request.input('limit', 10)
+      const search = request.input('search', '') // parâmetro de busca
+
+      const query = Cliente.query()
+
+      // Se tiver termo de busca, filtra por nome
+      if (search) {
+        query.where('nome', 'ILIKE', `%${search}%`)
+      }
+
+      const clientes = await query.paginate(page, limit)
+
       return response.ok({
         success: true,
         message: 'Lista de clientes carregada com sucesso!',
