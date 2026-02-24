@@ -40,9 +40,12 @@ export default class ClientesController {
       // Verificar se já existe cliente com este email, CPF ou RG
       const erros: string[] = []
 
-      const clienteComEmail = await Cliente.findBy('email', data.email)
-      if (clienteComEmail) {
-        erros.push('Já existe um cliente cadastrado com este e-mail')
+      // SÓ VERIFICA EMAIL SE ELE FOI ENVIADO
+      if (data.email) {
+        const clienteComEmail = await Cliente.findBy('email', data.email)
+        if (clienteComEmail) {
+          erros.push('Já existe um cliente cadastrado com este e-mail')
+        }
       }
 
       const clienteComCpf = await Cliente.findBy('cpf', data.cpf)
