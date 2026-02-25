@@ -215,7 +215,7 @@ export default class ContratosController {
 
   public async search({ request, response }: HttpContext) {
     try {
-      const termo = request.input('q') // parâmetro de busca
+      const termo = request.input('q')
 
       if (!termo) {
         return response.status(400).json({
@@ -224,9 +224,8 @@ export default class ContratosController {
         })
       }
 
-      // CORREÇÃO: Usar where com subquery para OR conditions
       const contratos = await Contrato.query()
-        .select('contratos.*')
+        .distinct('contratos.*')
         .join('clientes', 'clientes.id', 'contratos.cliente_id')
         .join('users as advogados', 'advogados.id', 'contratos.user_id')
         .where((query) => {
@@ -235,6 +234,9 @@ export default class ContratosController {
             .orWhereILike('advogados.nome', `%${termo}%`)
             .orWhereILike('contratos.titulo', `%${termo}%`)
         })
+        .preload('cliente')
+        .preload('user')
+        .orderBy('created_at', 'desc')
 
       return response.json({
         success: true,

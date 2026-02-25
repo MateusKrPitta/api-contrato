@@ -54,4 +54,11 @@ export default class Contrato extends BaseModel {
     foreignKey: 'user_id',
   })
   declare user: BelongsTo<typeof User>
+
+  serializeExtras() {
+    return {
+      cliente: this.cliente,
+      advogado: this.user,
+    }
+  }
 }

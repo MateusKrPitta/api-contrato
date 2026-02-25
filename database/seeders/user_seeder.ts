@@ -3,12 +3,11 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class UserSeeder extends BaseSeeder {
   public async run() {
-    // ✅ CORRETO: Use texto plano - o modelo faz hash automático
     await User.firstOrCreate(
       { email: 'admin@email.com' },
       {
         nome: 'Administrador',
-        senha: '123456', // ⬅️ TEXTO PLANO!
+        senha: '123456',
         permissao: 3,
         cpf: '123.456.789-00',
         profissao: 'Administrador',
@@ -25,7 +24,7 @@ export default class UserSeeder extends BaseSeeder {
       { email: 'joao@email.com' },
       {
         nome: 'João Advogado',
-        senha: '123456', // ⬅️ TEXTO PLANO!
+        senha: '123456',
         permissao: 2,
         cpf: '987.654.321-00',
         profissao: 'Advogado',
@@ -42,7 +41,7 @@ export default class UserSeeder extends BaseSeeder {
       { email: 'maria@email.com' },
       {
         nome: 'Maria Usuária',
-        senha: '123456', // ⬅️ TEXTO PLANO!
+        senha: '123456',
         permissao: 1,
         cpf: '111.222.333-44',
         profissao: 'Analista',
