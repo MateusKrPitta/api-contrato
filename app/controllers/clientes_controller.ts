@@ -6,11 +6,10 @@ export default class ClientesController {
     try {
       const page = request.input('page', 1)
       const limit = request.input('limit', 10)
-      const search = request.input('search', '') // parâmetro de busca
+      const search = request.input('search', '')
 
       const query = Cliente.query()
 
-      // Se tiver termo de busca, filtra por nome
       if (search) {
         query.where('nome', 'ILIKE', `%${search}%`)
       }
@@ -20,6 +19,24 @@ export default class ClientesController {
       return response.ok({
         success: true,
         message: 'Lista de clientes carregada com sucesso!',
+        data: clientes,
+      })
+    } catch (error) {
+      return response.internalServerError({
+        success: false,
+        message: 'Erro interno ao carregar lista de clientes',
+        details: this.getErrorMessage(error),
+      })
+    }
+  }
+
+  async listSimple({ response }: HttpContext) {
+    try {
+      const clientes = await Cliente.query().select('id', 'nome').orderBy('nome', 'asc')
+
+      return response.ok({
+        success: true,
+        message: 'Lista simplificada de clientes carregada com sucesso!',
         data: clientes,
       })
     } catch (error) {
