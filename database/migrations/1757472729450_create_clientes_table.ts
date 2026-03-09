@@ -19,6 +19,10 @@ export default class extends BaseSchema {
       table.string('rua').notNullable()
       table.string('numero').notNullable()
       table.string('bairro').notNullable()
+
+      table.string('numero_contrato').nullable()
+      table.json('titulos').nullable()
+
       table.timestamps(true)
     })
   }

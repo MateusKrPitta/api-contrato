@@ -254,4 +254,52 @@ export default class ContratosController {
       })
     }
   }
+  public async duplicate({ params, response }: HttpContext) {
+    try {
+      // Busca o contrato original com os relacionamentos
+      const contratoOriginal = await Contrato.query()
+        .where('id', params.id)
+        .preload('cliente')
+        .preload('user')
+        .firstOrFail()
+
+      // Prepara os dados para o novo contrato (cópia)
+      const novoContratoData = {
+        cliente_id: contratoOriginal.cliente_id,
+        user_id: contratoOriginal.user_id,
+        titulo: `${contratoOriginal.titulo} - CÓPIA ${new Date().toLocaleDateString('pt-BR')}`,
+        numero_contrato: `CTR-${Date.now()}`, // Gera um novo número
+        procuracao_html: contratoOriginal.procuracao_html,
+        honorario_html: contratoOriginal.honorario_html,
+        peticao_html: contratoOriginal.peticao_html,
+        hash: `${contratoOriginal.hash || 'CTR'}-COPY-${Date.now()}`, // Gera um novo hash
+        status: 'pendente', // Começa como pendente para revisão
+      }
+
+      // Cria o novo contrato
+      const novoContrato = await Contrato.create(novoContratoData)
+
+      return response.status(201).json({
+        success: true,
+        message: 'Contrato duplicado com sucesso! 📄✨',
+        data: {
+          original: {
+            id: contratoOriginal.id,
+            titulo: contratoOriginal.titulo,
+          },
+          copia: {
+            id: novoContrato.id,
+            titulo: novoContrato.titulo,
+            numero_contrato: novoContrato.numero_contrato,
+          },
+        },
+      })
+    } catch (error) {
+      return response.status(404).json({
+        success: false,
+        message: 'Não foi possível duplicar o contrato. 😕',
+        error: error.message,
+      })
+    }
+  }
 }

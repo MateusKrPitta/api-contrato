@@ -26,8 +26,9 @@ router
     router.get('/contratos/search', [ContratosController, 'search'])
     router.get('/contratos/count', [ContratosController, 'count'])
     router.get('/contratos/user/:userId', [ContratosController, 'findByUser'])
-
+    router.post('contratos/:id/duplicar', [ContratosController, 'duplicate'])
     router.resource('contratos', ContratosController).apiOnly()
+
     router.post('/logout', [AuthController, 'logout'])
   })
   .use(middleware.auth())

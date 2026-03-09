@@ -64,6 +64,8 @@ export default class ClientesController {
         'rua',
         'numero',
         'bairro',
+        'numero_contrato',
+        'titulos',
       ])
 
       // Verificar se já existe cliente com este email, CPF ou RG
@@ -93,6 +95,21 @@ export default class ClientesController {
           message: 'Erro ao cadastrar cliente',
           details: erros.join(', '),
         })
+      }
+
+      // Tratar titulos se vier como string (do form-data)
+      if (data.titulos && typeof data.titulos === 'string') {
+        try {
+          data.titulos = JSON.parse(data.titulos)
+        } catch (e) {
+          // Se não for JSON válido, pode ser uma string simples
+          data.titulos = [data.titulos]
+        }
+      }
+
+      // Garantir que titulos seja array ou null
+      if (data.titulos && !Array.isArray(data.titulos)) {
+        data.titulos = [data.titulos]
       }
 
       const cliente = await Cliente.create(data)
@@ -159,6 +176,8 @@ export default class ClientesController {
         'rua',
         'numero',
         'bairro',
+        'numero_contrato',
+        'titulos',
       ])
 
       // Verificar se email, CPF ou RG já existem em outros clientes
@@ -200,6 +219,21 @@ export default class ClientesController {
           message: 'Erro ao atualizar cliente',
           details: erros.join(', '),
         })
+      }
+
+      // Tratar titulos se vier como string (do form-data)
+      if (data.titulos && typeof data.titulos === 'string') {
+        try {
+          data.titulos = JSON.parse(data.titulos)
+        } catch (e) {
+          // Se não for JSON válido, pode ser uma string simples
+          data.titulos = [data.titulos]
+        }
+      }
+
+      // Garantir que titulos seja array ou null
+      if (data.titulos && !Array.isArray(data.titulos)) {
+        data.titulos = [data.titulos]
       }
 
       cliente.merge(data)
@@ -263,6 +297,10 @@ export default class ClientesController {
       return 'Já existe um cliente cadastrado com este RG'
     }
 
+    if (errorMessage.includes('clientes_cnh_unique')) {
+      return 'Já existe um cliente cadastrado com esta CNH'
+    }
+
     if (errorMessage.includes('duplicar valor da chave viola')) {
       if (errorMessage.includes('email')) {
         return 'Já existe um cliente cadastrado com este e-mail'
@@ -272,6 +310,9 @@ export default class ClientesController {
       }
       if (errorMessage.includes('rg')) {
         return 'Já existe um cliente cadastrado com este RG'
+      }
+      if (errorMessage.includes('cnh')) {
+        return 'Já existe um cliente cadastrado com esta CNH'
       }
       return 'Registro duplicado: já existe um cliente com estes dados'
     }
@@ -285,6 +326,9 @@ export default class ClientesController {
       }
       if (errorMessage.includes('rg')) {
         return 'Já existe um cliente cadastrado com este RG'
+      }
+      if (errorMessage.includes('cnh')) {
+        return 'Já existe um cliente cadastrado com esta CNH'
       }
       return 'Registro duplicado: já existe um cliente com estes dados'
     }
